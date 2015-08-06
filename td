@@ -11,7 +11,7 @@ confirm() {
   exec $1
 }
 
-if [[ $1 = 'add' ]] ; then
+if [[ $1 = "add" ]] ; then
 
   line="$(($LINE_COUNT + 1)): "
 
@@ -20,17 +20,15 @@ if [[ $1 = 'add' ]] ; then
     line="$line $2" ; shift
   done
 
-  line="$line"
-
   echo "$line" >> $TODO_FILE
 
-elif [[ $1 = list ]] ; then
+elif [[ $1 = "list" ]] ; then
 
   touch $TODO_FILE
   echo TODO
   echo $(<$TODO_FILE)
 
-elif [[ $1 = remove ]] ; then
+elif [[ $1 = "remove" ]] ; then
 
   if [[ $2 -gt 0 ]] && [[ $2 -le $LINE_COUNT ]] ; then
     echo "Deleting line ${2}. Interrupt to cancel: "
