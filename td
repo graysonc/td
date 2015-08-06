@@ -24,9 +24,12 @@ if [[ $1 = "add" ]] ; then
 
 elif [[ $1 = "list" ]] ; then
 
-  touch $TODO_FILE
   echo TODO
-  echo $(<$TODO_FILE)
+  if [[ $LINE_COUNT -gt 0 ]] ; then
+    echo $(<$TODO_FILE)
+  else
+    echo "Nothing! :)"
+  fi
 
 elif [[ $1 = "remove" ]] ; then
 
