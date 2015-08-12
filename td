@@ -11,27 +11,35 @@ confirm() {
   exec $1
 }
 
-if [[ $1 = "add" ]] ; then
+case $1 in
 
-  line="$(($LINE_COUNT + 1)): "
+  a|ad|add)
 
-  # Chomp through the line, word by word. We don't care about $1 anymore.
-  while [[ -n $2 ]] ; do
-    line="$line $2" ; shift
-  done
+    if [[ $LINE_COUNT = 0 ]] ; then
+      LINE_COUNT=1 ;
+    fi
 
-  echo "$line" >> $TODO_FILE
+    # Chomp through the line, word by word. We don't care about $1 anymore.
+    while [[ -n $2 ]] ; do
+      line="$line $2" ; shift
+    done
 
-elif [[ $1 = "list" ]] ; then
+    echo "$line" >> $TODO_FILE
 
-  echo TODO
-  if [[ $LINE_COUNT -gt 0 ]] ; then
-    echo $(<$TODO_FILE)
-  else
-    echo "Nothing! :)"
-  fi
+  ;;
 
-elif [[ $1 = "remove" ]] ; then
+  l|li|lis|list)
+
+    echo TODO
+    if [[ $LINE_COUNT -gt 0 ]] ; then
+      cat -n $TODO_FILE
+    else
+      echo "Nothing! :)"
+    fi
+
+  ;;
+
+  r|re|rem|remo|remov|remove)
 
   if [[ $2 -gt 0 ]] && [[ $2 -le $LINE_COUNT ]] ; then
     echo "Deleting line ${2}. Interrupt to cancel: "
@@ -39,4 +47,6 @@ elif [[ $1 = "remove" ]] ; then
     confirm "sed -i'' ${2}d $HOME/todo.txt"
   fi
 
-fi
+  ;;
+
+esac
