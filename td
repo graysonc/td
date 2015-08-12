@@ -41,11 +41,17 @@ case $1 in
 
   r|re|rem|remo|remov|remove)
 
-  if [[ $2 -gt 0 ]] && [[ $2 -le $LINE_COUNT ]] ; then
-    echo "Deleting line ${2}. Interrupt to cancel: "
-    sed "${2}s/^/----> /" $HOME/todo.txt
-    confirm "sed -i'' ${2}d $HOME/todo.txt"
-  fi
+    if [[ $2 -gt 0 ]] && [[ $2 -le $LINE_COUNT ]] ; then
+      echo "Deleting line ${2}. Interrupt to cancel: "
+      sed "${2}s/^/----> /" $HOME/todo.txt
+      confirm "sed -i'' ${2}d $HOME/todo.txt"
+    fi
+
+  ;;
+
+  u|up|upd|upda|updat|update)
+
+    $(cd /usr/local/bin && curl -O https://raw.githubusercontent.com/graysonc/td/master/td && chmod +x ./td)
 
   ;;
 
